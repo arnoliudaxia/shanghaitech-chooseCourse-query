@@ -6,6 +6,10 @@
 
 在当时笔者写了一个小笔记记录原理，感兴趣的朋友可以[点这里](https://flowus.cn/share/105777d6-200e-460f-8c4d-7db16599dab9)。
 
+## 工具地址
+https://shanghaitech-choosecourse-query-production.up.railway.app/
+
+
 ## 效果截图
 
 ![img0](img/img0.jpg)
