@@ -12,4 +12,4 @@ st.warning("注意所有跳转到egate的链接打开后，需要你手动点一
 
 "## 食用方法"
 st.write(r"既然是获取课程名单，当然要知道获取什么课啦，如果你想找你课程表里的某个课那非常简单直接跳转到「🔍课表查询」页面。反之，如果这课你没有选(不在你的课程表里)，那么请参照上面的笔记然后前往 「🔴单课查询」页面。")
-st.error("声明：本服务仅仅在本地调用egate API，不会上传任何数据，本项目的源代码已经开源在[GitHub](https://github.com/arnoliudaxia/shanghaitech-chooseCourse-query.git)，欢迎大家:star:。")
+st.error("声明：本服务仅仅模拟今日校园访问egate，不会上传任何数据，本项目的源代码已经开源在[GitHub](https://github.com/arnoliudaxia/shanghaitech-chooseCourse-query.git)，欢迎大家:star:。")
