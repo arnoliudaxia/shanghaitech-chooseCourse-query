@@ -38,5 +38,5 @@ if useranswer!="":
             coursesTable.append([course["课程代码"],course["课程名称"],course["课程安排"],course["classid"]])
         st.table(coursesTable)
     else:
-        st.image("https://i.postimg.cc/brJcRr4g/format-png.png")
+        st.image("https://i.postimg.cc/brJcRr4g/format-png.png",width=500)
 
