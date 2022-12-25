@@ -63,18 +63,22 @@ if useranswer!="" or st.session_state["Authed"]=="True":
             
         # 筛选逻辑
         filterInputAera=st.empty()
-        userFilter=filterInputAera.text_input(label="userFilter",placeholder="筛选课程代号和课程名称，暂不支持正则",label_visibility="hidden")
         fcol1,fcol2 =st.columns(2)
+        if "txt_userFilter" not in st.session_state:
+            st.session_state["txt_userFilter"]=""
         with fcol1:
             if st.button("筛选"):
                 filtedCoursesTable.clear()
                 for course in coursesTable:
-                    if userFilter in course[0]+course[1]:
+                    if st.session_state["txt_userFilter"] in course[0]+course[1]:
                         filtedCoursesTable.append(course)
 
         with fcol2:
             if st.button("清空筛选"):
                 filtedCoursesTable=coursesTable.copy()
+                st.session_state["txt_userFilter"]=""
+        filterInputAera.text_input(label="userFilter",placeholder="筛选课程代号和课程名称，暂不支持正则",label_visibility="hidden",key="txt_userFilter")
+        
         # 一键查询逻辑
         userGen=st.text_input(label="userGen",placeholder="你想查询的课程代号",label_visibility="hidden")
         if st.button("查询"):
