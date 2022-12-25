@@ -31,6 +31,8 @@ coursesTable=[]
 filtedCoursesTable=[]
 queryURLs={}
 week_list = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"]
+if 'Authed' not in st.session_state:
+    st.session_state['Authed'] = 'None'
 if useranswer!="" or st.session_state["Authed"]=="True":
     if challenge == useranswer.upper() or st.session_state["Authed"]=="True":
         st.session_state["Authed"]="True"
