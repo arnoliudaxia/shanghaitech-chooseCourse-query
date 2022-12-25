@@ -1,6 +1,7 @@
 import json
 import streamlit as st
 
+st.success("在v2.0版本之后，在「所有课程」页面里有的课程基本上都可以一键查询，不用在这里手填了。")
 st.success("你需要完整填写下面所有输入框,然后点击「查询」按钮。")
 classid=st.text_input("请输入classid", value="")
 

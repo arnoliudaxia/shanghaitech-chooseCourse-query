@@ -23,7 +23,12 @@ https://shanghaitech-choosecourse-query-production.up.railway.app/
 - [ ] 编写Dockerfile  
 
 ## 更新日志
+v2.0
+- 数据库筛选功能
+- 一键查询数据库里有的所有课程
+
 v1.1
 - 加入所有课程的查询
+
 v1.0
 - 基本查询功能
