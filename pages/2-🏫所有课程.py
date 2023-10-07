@@ -2,15 +2,22 @@ import streamlit as st
 import os
 import json
 from Crypto.Cipher import AES
+import urllib.parse
 
-@st.cache
+# region 不可见内容
+@st.cache_data
 def getChallenge():
     return os.getenv('CHALLENGE')
 challenge = getChallenge()
 
-@st.cache
+# @st.cache_data
 def getData(key:str):
     key = key.encode("utf-8").ljust(16, b"\0")
+    with open("res/courses.json", "rb") as file:
+        data=file.read()
+    return data
+
+
     with open("res/courses_en.json", "rb") as file:
         data=file.read()
         cipher = AES.new(key, AES.MODE_ECB)
@@ -18,28 +25,32 @@ def getData(key:str):
         AES_de_str = AES_de_str.strip()
         AES_de_str = AES_de_str.decode("utf-8")
     return AES_de_str
+if 'Authed' not in st.session_state:
+    st.session_state['Authed'] = 'None'
+# endregion
 
-
-col1,col2 =st.columns(2)
-with col1:
+# 页面内容开始
+"当前课程数据库版本："+"2023秋季"
+checkChanllengeCol =st.columns(2)
+with checkChanllengeCol[0]:
     st.warning("想要看我校的课程？请先回答下面的问题。")
-with col2:
+with checkChanllengeCol[1]:
     st.image("https://i.postimg.cc/3w1kFX3G/3263d58a7a2354e5f04a71a2ecd622bb.jpg")
 useranswer=st.text_input("信导的课程代号是啥(大小写不敏感)：")
-# if st.button("提交"):
+
 coursesTable=[]
 filtedCoursesTable=[]
 queryURLs={}
 week_list = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"]
-if 'Authed' not in st.session_state:
-    st.session_state['Authed'] = 'None'
+
 if useranswer!="" or st.session_state["Authed"]=="True":
     if challenge == useranswer.upper() or st.session_state["Authed"]=="True":
         st.session_state["Authed"]="True"
         with st.empty():
             st.image("https://i.postimg.cc/VLRsTjSL/v2-a284fb5c84d8e47f2fe6d63a8c47bbfd-r.jpg",width=200)
         if(len(coursesTable)==0):
-            data = getData(challenge).replace("\x00","")
+            data = getData(challenge)
+            # data = getData(challenge).replace("\x00","")
             data = json.loads(data)
             for course in data:
                 coursesTable.append([course["课程代码"],course["课程名称"],course["课程安排"],course["classid"]])
@@ -53,7 +64,7 @@ if useranswer!="" or st.session_state["Authed"]=="True":
                 jieshuS=timeAndPlace[1][:-1].split("-")
                 jieshuE=jieshuS[1]
                 jieshuS=jieshuS[0]
-                place=timeAndPlace[2]
+                place=" ".join(timeAndPlace[2:])
                 if "\n" in place:
                     place=place.split("\n")[0]
                 # 构建查询url
@@ -83,8 +94,9 @@ if useranswer!="" or st.session_state["Authed"]=="True":
         userGen=st.text_input(label="userGen",placeholder="你想查询的课程代号",label_visibility="hidden")
         if st.button("查询"):
             if userGen in queryURLs.keys():
-                st.success("生成自动查询链接，如果无效请手动查询")
-                st.write(queryURLs[userGen])
+                st.success("生成自动查询链接，如果无效请尝试手动修改或联系本人")
+                queryUrlSingle= urllib.parse.quote(queryURLs[userGen],safe=":/?&=")
+                st.markdown(f"[点击我跳转到查询结果]({queryUrlSingle})")
             else:
                 st.error("无法自动查询,请手动查询")
         # 课程数据库or查询结果解析
